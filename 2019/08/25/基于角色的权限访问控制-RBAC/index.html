@@ -4,8 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, Java,flowable,acitivi,工作流,RBAC,博客,学习">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="基于角色的权限访问控制(RBAC), Java,flowable,acitivi,工作流,RBAC,博客,学习">
+    <meta name="description" content="@TOC
+RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色的权限访问控制，作为传统访问控制（自主访问，强制访问）的有前景的代替受到广泛的关注。在RBAC中，权限与角色相关联，用户通过成为">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Hello World | 楷の博客</title>
+    <title>基于角色的权限访问控制(RBAC) | 楷の博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -260,13 +261,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Hello World
+                        基于角色的权限访问控制(RBAC)
                     </div>
                 </div>
             </div>
@@ -375,12 +376,29 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/RBAC/" target="_blank">
+                                <span class="chip bg-color">RBAC</span>
+                            </a>
+                        
+                            <a href="/tags/角色权限设计/" target="_blank">
+                                <span class="chip bg-color">角色权限设计</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/RBAC/" class="post-category" target="_blank">
+                                RBAC
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -395,14 +413,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        73
+                        1k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        1 分
+                        3 分
                     </div>
                     
                 
@@ -418,19 +436,22 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+                <p>@<a href="基于角色的权限访问控制（RBAC）">TOC</a></p>
+<h1 id="RBAC模型"><a href="#RBAC模型" class="headerlink" title="RBAC模型"></a>RBAC模型</h1><h2 id="什么是RBAC"><a href="#什么是RBAC" class="headerlink" title="什么是RBAC"></a>什么是RBAC</h2><p>RBAC（全称：Role-Based Access Control）基于角色的权限访问控制，作为传统访问控制（自主访问，强制访<br>问）的有前景的代替受到广泛的关注。在RBAC中，权限与角色相关联，用户通过成为适当角色的成员而得到这些<br>角色的权限。这就极大地简化了权限的管理。在一个组织中，角色是为了完成各种工作而创造，用户则依据它的责<br>任和资格来被指派相应的角色，用户可以很容易地从一个角色被指派到另一个角色。角色可依新的需求和系统的合<br>并而赋予新的权限，而权限也可根据需要而从某角色中回收。角色与角色的关系可以建立起来以囊括更广泛的客观<br>情况。<br>访问控制是针对越权使用资源的防御措施，目的是为了限制访问主体（如用户等） 对访问客体（如数据库资源等）<br>的访问权限。企业环境中的访问控制策略大部分都采用基于角色的访问控制（RBAC）模型，是目前公认的解决大<br>型企业的统一资源访问控制的有效方法</p>
+<h2 id="基于RBAC的设计思路"><a href="#基于RBAC的设计思路" class="headerlink" title="基于RBAC的设计思路"></a>基于RBAC的设计思路</h2><p>基于角色的访问控制基本原理是在用户和访问权限之间加入角色这一层，实现用户和权限的分离，用户只有通过激<br>活角色才能获得访问权限。通过角色对权限分组，大大简化了用户权限分配表，间接地实现了对用户的分组，提高<br>了权限的分配效率。且加入角色层后，访问控制机制更接近真实世界中的职业分配，便于权限管理<br><img src="https://img-blog.csdnimg.cn/20190723100359279.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="角色权限ER图"><br>在RBAC模型中，角色是系统根据管理中相对稳定的职权和责任来划分，每种角色可以完成一定的职能。用户通过<br>饰演不同的角色获得角色所拥有的权限，一旦某个用户成为某角色的成员，则此用户可以完成该角色所具有的职<br>能。通过将权限指定给角色而不是用户，在权限分派上提供了极大的灵活性和极细的权限指定粒度。</p>
+<h2 id="表结构分析"><a href="#表结构分析" class="headerlink" title="表结构分析"></a>表结构分析</h2><p><img src="https://img-blog.csdnimg.cn/20190723100520592.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="表结构分析"><br>一个用户拥有若干角色，每一个角色拥有若干权限。这样，就构造成“用户-角色-权限”的授权模型。在这种模型<br>中，用户与角色之间，角色与权限之间，一般者是多对多的关系。</p>
+<h2 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h2><p>某项目的需求是这样的，在应用系统中，权限是以什么样的形式展现出来的？对菜单的访问，页面上按钮的可见性，后端接口的控制，都要进行充分考虑</p>
+<ul>
+<li><strong>前端</strong><br>前端菜单：根据是否有请求菜单权限进行动态加载<br>按钮：根据是否具有此权限进行显示/隐藏的控制</li>
+<li><strong>后端</strong></li>
+<li>前端发送请求到后端接口，有必要对接口的访问进行权限的验证</li>
+</ul>
+<p>针对这样的需求，在有些设计中可以将菜单，按钮，后端API请求等作为资源，这样就构成了基于RBAC的另一种授<br>权模型（用户-角色-权限-资源）。<br><img src="https://img-blog.csdnimg.cn/20190723101218391.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="案例权限模型"><br>那么，它们的表结构就应该如下图，所示<br><img src="https://img-blog.csdnimg.cn/20190723101348785.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="案例表结构分析"><br>这里要注意的是，权限表与菜单表、页面元素表与API接口表都是一对一的关系</p>
+<h2 id="RBAC的优点"><a href="#RBAC的优点" class="headerlink" title="RBAC的优点"></a>RBAC的优点</h2><p>与传统的RBAC模型对比不难发现此种设计的好处：</p>
+<ol>
+<li>不需要区分哪些是操作，哪些是资源</li>
+<li>方便扩展，当系统要对新的东西进行权限控制时，我只需要建立一个新的资源表，并确定这类权限的权限类<br>型标识即可</li>
+</ol>
 
             </div>
             <hr/>
@@ -589,9 +610,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《Hello World》
+                    《基于角色的权限访问控制(RBAC)》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/08/25/hello-world/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/08/25/基于角色的权限访问控制-RBAC/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jack Chan
             </a> 采用
@@ -631,10 +652,9 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <a href="/2019/08/25/hello-world/">
                     <div class="card-image">
@@ -652,9 +672,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-25
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-25
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -663,7 +683,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -674,19 +693,19 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/08/25/基于角色的权限访问控制-RBAC/">
+                <a href="/2019/08/25/基于Hexo主题Matery搭建个人博客/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="基于角色的权限访问控制(RBAC)">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="基于Hexo主题Matery搭建个人博客">
                         
-                        <span class="card-title">基于角色的权限访问控制(RBAC)</span>
+                        <span class="card-title">基于Hexo主题Matery搭建个人博客</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            前段时间，一直忙于工作流的事情，都没时间把RBAC的整理出来，今天，它来了
+                            突然心血来潮，想搭建一个自己的博客，于是开始了这段旅程，使用Github+Hexo搭建
                         
                     </div>
                     <div class="publish-info">
@@ -697,8 +716,8 @@
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/RBAC/" class="post-category" target="_blank">
-                                    RBAC
+                            <a href="/categories/Matery/" class="post-category" target="_blank">
+                                    Matery
                                 </a>
                             
                             
@@ -708,12 +727,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RBAC/" target="_blank">
-                        <span class="chip bg-color">RBAC</span>
+                    <a href="/tags/Hexo/" target="_blank">
+                        <span class="chip bg-color">Hexo</span>
                     </a>
                     
-                    <a href="/tags/角色权限设计/" target="_blank">
-                        <span class="chip bg-color">角色权限设计</span>
+                    <a href="/tags/博客搭建/" target="_blank">
+                        <span class="chip bg-color">博客搭建</span>
+                    </a>
+                    
+                    <a href="/tags/matery/" target="_blank">
+                        <span class="chip bg-color">matery</span>
                     </a>
                     
                 </div>
