@@ -4,9 +4,14 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="基于角色的权限访问控制(RBAC), Java,flowable,acitivi,工作流,RBAC,博客,学习">
-    <meta name="description" content="@TOC
-RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色的权限访问控制，作为传统访问控制（自主访问，强制访问）的有前景的代替受到广泛的关注。在RBAC中，权限与角色相关联，用户通过成为">
+    <meta name="keywords" content="各种工作流的引擎的比较, Java,flowable,acitivi,工作流,RBAC,博客,学习">
+    <meta name="description" content="@[toc]
+对比框架简介
+
+jBPM，是始祖，但目前市场较小，不作为对比重点
+Activiti，2010年基于jBPM诞生
+Flowable，2016年基于Activiti诞生
+Comframe，亚信的工作流框架，从时间上推测，用的可能是">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +19,7 @@ RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色�
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>基于角色的权限访问控制(RBAC) | 楷の博客</title>
+    <title>各种工作流的引擎的比较 | 楷の博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -261,13 +266,13 @@ RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色�
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        基于角色的权限访问控制(RBAC)
+                        各种工作流的引擎的比较
                     </div>
                 </div>
             </div>
@@ -378,12 +383,16 @@ RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色�
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/RBAC/" target="_blank">
-                                <span class="chip bg-color">RBAC</span>
+                            <a href="/tags/flowable/" target="_blank">
+                                <span class="chip bg-color">flowable</span>
                             </a>
                         
-                            <a href="/tags/角色权限设计/" target="_blank">
-                                <span class="chip bg-color">角色权限设计</span>
+                            <a href="/tags/工作流/" target="_blank">
+                                <span class="chip bg-color">工作流</span>
+                            </a>
+                        
+                            <a href="/tags/activiti/" target="_blank">
+                                <span class="chip bg-color">activiti</span>
                             </a>
                         
                     </div>
@@ -394,8 +403,8 @@ RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色�
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/RBAC/" class="post-category" target="_blank">
-                                RBAC
+                            <a href="/categories/工作流/" class="post-category" target="_blank">
+                                工作流
                             </a>
                         
                     </div>
@@ -413,14 +422,14 @@ RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色�
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1k
+                        468
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        3 分
+                        1 分
                     </div>
                     
                 
@@ -436,22 +445,48 @@ RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色�
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>@<a href="基于角色的权限访问控制（RBAC）">TOC</a></p>
-<h1 id="RBAC模型"><a href="#RBAC模型" class="headerlink" title="RBAC模型"></a>RBAC模型</h1><h2 id="什么是RBAC"><a href="#什么是RBAC" class="headerlink" title="什么是RBAC"></a>什么是RBAC</h2><p>RBAC（全称：Role-Based Access Control）基于角色的权限访问控制，作为传统访问控制（自主访问，强制访<br>问）的有前景的代替受到广泛的关注。在RBAC中，权限与角色相关联，用户通过成为适当角色的成员而得到这些<br>角色的权限。这就极大地简化了权限的管理。在一个组织中，角色是为了完成各种工作而创造，用户则依据它的责<br>任和资格来被指派相应的角色，用户可以很容易地从一个角色被指派到另一个角色。角色可依新的需求和系统的合<br>并而赋予新的权限，而权限也可根据需要而从某角色中回收。角色与角色的关系可以建立起来以囊括更广泛的客观<br>情况。<br>访问控制是针对越权使用资源的防御措施，目的是为了限制访问主体（如用户等） 对访问客体（如数据库资源等）<br>的访问权限。企业环境中的访问控制策略大部分都采用基于角色的访问控制（RBAC）模型，是目前公认的解决大<br>型企业的统一资源访问控制的有效方法</p>
-<h2 id="基于RBAC的设计思路"><a href="#基于RBAC的设计思路" class="headerlink" title="基于RBAC的设计思路"></a>基于RBAC的设计思路</h2><p>基于角色的访问控制基本原理是在用户和访问权限之间加入角色这一层，实现用户和权限的分离，用户只有通过激<br>活角色才能获得访问权限。通过角色对权限分组，大大简化了用户权限分配表，间接地实现了对用户的分组，提高<br>了权限的分配效率。且加入角色层后，访问控制机制更接近真实世界中的职业分配，便于权限管理<br><img src="https://img-blog.csdnimg.cn/20190723100359279.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="角色权限ER图"><br>在RBAC模型中，角色是系统根据管理中相对稳定的职权和责任来划分，每种角色可以完成一定的职能。用户通过<br>饰演不同的角色获得角色所拥有的权限，一旦某个用户成为某角色的成员，则此用户可以完成该角色所具有的职<br>能。通过将权限指定给角色而不是用户，在权限分派上提供了极大的灵活性和极细的权限指定粒度。</p>
-<h2 id="表结构分析"><a href="#表结构分析" class="headerlink" title="表结构分析"></a>表结构分析</h2><p><img src="https://img-blog.csdnimg.cn/20190723100520592.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="表结构分析"><br>一个用户拥有若干角色，每一个角色拥有若干权限。这样，就构造成“用户-角色-权限”的授权模型。在这种模型<br>中，用户与角色之间，角色与权限之间，一般者是多对多的关系。</p>
-<h2 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h2><p>某项目的需求是这样的，在应用系统中，权限是以什么样的形式展现出来的？对菜单的访问，页面上按钮的可见性，后端接口的控制，都要进行充分考虑</p>
+                <p>@[toc]</p>
+<h2 id="对比框架简介"><a href="#对比框架简介" class="headerlink" title="对比框架简介"></a>对比框架简介</h2><p><img src="https://img-blog.csdnimg.cn/20190814082916914.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <ul>
-<li><strong>前端</strong><br>前端菜单：根据是否有请求菜单权限进行动态加载<br>按钮：根据是否具有此权限进行显示/隐藏的控制</li>
-<li><strong>后端</strong></li>
-<li>前端发送请求到后端接口，有必要对接口的访问进行权限的验证</li>
+<li>jBPM，是始祖，但目前市场较小，不作为对比重点</li>
+<li>Activiti，2010年基于jBPM诞生</li>
+<li>Flowable，2016年基于Activiti诞生</li>
+<li>Comframe，亚信的工作流框架，从时间上推测，用的可能是jBPM2.0或者3.0</li>
+<li>新零售工作流框架，从使用的ExtJS3和dwr推测，应该诞生于2010年前后，应该没有用开源工作流框架，功能可能比较简单</li>
 </ul>
-<p>针对这样的需求，在有些设计中可以将菜单，按钮，后端API请求等作为资源，这样就构成了基于RBAC的另一种授<br>权模型（用户-角色-权限-资源）。<br><img src="https://img-blog.csdnimg.cn/20190723101218391.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="案例权限模型"><br>那么，它们的表结构就应该如下图，所示<br><img src="https://img-blog.csdnimg.cn/20190723101348785.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="案例表结构分析"><br>这里要注意的是，权限表与菜单表、页面元素表与API接口表都是一对一的关系</p>
-<h2 id="RBAC的优点"><a href="#RBAC的优点" class="headerlink" title="RBAC的优点"></a>RBAC的优点</h2><p>与传统的RBAC模型对比不难发现此种设计的好处：</p>
-<ol>
-<li>不需要区分哪些是操作，哪些是资源</li>
-<li>方便扩展，当系统要对新的东西进行权限控制时，我只需要建立一个新的资源表，并确定这类权限的权限类<br>型标识即可</li>
-</ol>
+<h2 id="对比框架选择"><a href="#对比框架选择" class="headerlink" title="对比框架选择"></a>对比框架选择</h2><p><img src="https://img-blog.csdnimg.cn/2019081408314735.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ul>
+<li>jBPM7主要与JBoss下的规则引擎集成较好，其他没有什么优势，不太建议</li>
+<li>Activiti6在主力Tijs Rademakers和Joram Barrez离开后，就没有开发了，一直停留在6.0.0，不太建议</li>
+<li>Salaboy可能是空降，对核心引擎不熟，也可能Alfresco想发展cloud方向，因此6.0以后直接启动7.0</li>
+<li>Flowable6以后，Tijs继续他的本行，开发引擎核心</li>
+</ul>
+<p>因此，这里对比activiti7和flowable6</p>
+<h2 id="RoadMap对比"><a href="#RoadMap对比" class="headerlink" title="RoadMap对比"></a>RoadMap对比</h2><p>Activiti RoadMap</p>
+<p><img src="https://img-blog.csdnimg.cn/20190814083309681.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>Flowable RoadMap</p>
+<p><img src="https://img-blog.csdnimg.cn/20190814083410162.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>可以看出：</p>
+<ul>
+<li>Activiti7的方向在云化</li>
+<li>而Flowable6的方向是继续它的引擎核心，新加了RESTful任务（这个activiti没有，我之前是通过写代码实现），新加了异步存历史数据从而提升效率等核心功能</li>
+<li>冀正在他的博客里讲了Flowable比Activiti多的功能：<a href="https://blog.csdn.net/qq_30739519/article/details/82493456" target="_blank" rel="noopener">https://blog.csdn.net/qq_30739519/article/details/82493456</a> 当然，因为冀正是flowable的commiter，所以没有说Activiti比Flowable多的功能，有点偏颇，可以作为参考。</li>
+</ul>
+<h2 id="功能与其他总体对比"><a href="#功能与其他总体对比" class="headerlink" title="功能与其他总体对比"></a>功能与其他总体对比</h2><p><img src="https://img-blog.csdnimg.cn/20190814083531389.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>给人的初步感觉：</p>
+<p><img src="https://img-blog.csdnimg.cn/20190814083556739.png" alt="在这里插入图片描述"></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ul>
+<li>具体选择看看锦华和龚总觉得哪个功能更为重要</li>
+<li>我个人根据开发效率、功能、总体印象排列如下<ul>
+<li>flowable6</li>
+<li>activiti7</li>
+<li>activiti6</li>
+<li>AI Comframe（AIF）</li>
+<li>新零售工作流</li>
+<li>jbpm7</li>
+<li>activiti5、flowable5、jbpm5/6/4/3，其他国产开源框架或商用框架等</li>
+</ul>
+</li>
+</ul>
+<p>本文由【Danni3】发布于开源中国，原文链接：<a href="https://my.oschina.net/u/2464371/blog/3031155" target="_blank" rel="noopener">https://my.oschina.net/u/2464371/blog/3031155</a></p>
 
             </div>
             <hr/>
@@ -610,9 +645,9 @@ RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色�
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《基于角色的权限访问控制(RBAC)》
+                    《各种工作流的引擎的比较》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/08/25/基于角色的权限访问控制-RBAC/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/08/25/各种工作流的引擎/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jack Chan
             </a> 采用
@@ -656,19 +691,19 @@ RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色�
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/08/25/各种工作流的引擎/">
+                <a href="/2019/08/25/基于Jenkins-Gitlab-Docker实现SpringBoot项目自动部署/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="各种工作流的引擎的比较">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="基于Jenkins+Gitlab+Docker实现SpringBoot项目自动部署">
                         
-                        <span class="card-title">各种工作流的引擎的比较</span>
+                        <span class="card-title">基于Jenkins+Gitlab+Docker实现SpringBoot项目自动部署</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            各种工作流的引擎的比较，主要还是针对flwoable、activiti、JBPM、ComFrame
+                            基于Jenkins+Gitlab+Docker实现SpringBoot项目自动部署,生产中很方便，给测试用也很方便
                         
                     </div>
                     <div class="publish-info">
@@ -679,8 +714,8 @@ RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色�
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/工作流/" class="post-category" target="_blank">
-                                    工作流
+                            <a href="/categories/Jenkins/" class="post-category" target="_blank">
+                                    Jenkins
                                 </a>
                             
                             
@@ -690,16 +725,20 @@ RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色�
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/flowable/" target="_blank">
-                        <span class="chip bg-color">flowable</span>
+                    <a href="/tags/Jenkins/" target="_blank">
+                        <span class="chip bg-color">Jenkins</span>
                     </a>
                     
-                    <a href="/tags/工作流/" target="_blank">
-                        <span class="chip bg-color">工作流</span>
+                    <a href="/tags/Gitlab/" target="_blank">
+                        <span class="chip bg-color">Gitlab</span>
                     </a>
                     
-                    <a href="/tags/activiti/" target="_blank">
-                        <span class="chip bg-color">activiti</span>
+                    <a href="/tags/Docker/" target="_blank">
+                        <span class="chip bg-color">Docker</span>
+                    </a>
+                    
+                    <a href="/tags/CI-CD/" target="_blank">
+                        <span class="chip bg-color">CI/CD</span>
                     </a>
                     
                 </div>
@@ -713,19 +752,19 @@ RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色�
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/08/25/基于Hexo主题Matery搭建个人博客/">
+                <a href="/2019/08/25/基于角色的权限访问控制-RBAC/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="基于Hexo主题Matery搭建个人博客">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="基于角色的权限访问控制(RBAC)">
                         
-                        <span class="card-title">基于Hexo主题Matery搭建个人博客</span>
+                        <span class="card-title">基于角色的权限访问控制(RBAC)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            突然心血来潮，想搭建一个自己的博客，于是开始了这段旅程，使用Github+Hexo搭建
+                            前段时间，一直忙于工作流的事情，都没时间把RBAC的整理出来，今天，它来了
                         
                     </div>
                     <div class="publish-info">
@@ -736,8 +775,8 @@ RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色�
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Matery/" class="post-category" target="_blank">
-                                    Matery
+                            <a href="/categories/RBAC/" class="post-category" target="_blank">
+                                    RBAC
                                 </a>
                             
                             
@@ -747,16 +786,12 @@ RBAC模型什么是RBACRBAC（全称：Role-Based Access Control）基于角色�
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Hexo/" target="_blank">
-                        <span class="chip bg-color">Hexo</span>
+                    <a href="/tags/RBAC/" target="_blank">
+                        <span class="chip bg-color">RBAC</span>
                     </a>
                     
-                    <a href="/tags/博客搭建/" target="_blank">
-                        <span class="chip bg-color">博客搭建</span>
-                    </a>
-                    
-                    <a href="/tags/matery/" target="_blank">
-                        <span class="chip bg-color">matery</span>
+                    <a href="/tags/角色权限设计/" target="_blank">
+                        <span class="chip bg-color">角色权限设计</span>
                     </a>
                     
                 </div>

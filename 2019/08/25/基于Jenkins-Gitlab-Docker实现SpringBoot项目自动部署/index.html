@@ -1,0 +1,1099 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="基于Jenkins+Gitlab+Docker实现SpringBoot项目自动部署, Java,flowable,acitivi,工作流,RBAC,博客,学习">
+    <meta name="description" content="@TOC
+1. 使用Docker搭建Jenkins1.1 拉取Jenkins镜像进入官网：https://jenkins.io/download/点击Docker进入Docker Hub我们这里选择jenkins/jenkins:lts版本">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>基于Jenkins+Gitlab+Docker实现SpringBoot项目自动部署 | 楷の博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+</head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">楷の博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">楷の博客</div>
+        <div class="logo-desc">
+            
+            一只来自大山的野生程序猿，精通Java、MySQL、Javascript、HTML、CSS、layui、esayUI、Vue、Flowable、Acitivi、RBAC、MyBatis、SpringBoot、Spring Mvc、Docker、Jenkins的英文拼写
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        基于Jenkins+Gitlab+Docker实现SpringBoot项目自动部署
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Jenkins/" target="_blank">
+                                <span class="chip bg-color">Jenkins</span>
+                            </a>
+                        
+                            <a href="/tags/Gitlab/" target="_blank">
+                                <span class="chip bg-color">Gitlab</span>
+                            </a>
+                        
+                            <a href="/tags/Docker/" target="_blank">
+                                <span class="chip bg-color">Docker</span>
+                            </a>
+                        
+                            <a href="/tags/CI-CD/" target="_blank">
+                                <span class="chip bg-color">CI/CD</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Jenkins/" class="post-category" target="_blank">
+                                Jenkins
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-08-25
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        3.1k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        11 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>@<a href="基于Jenkins+Gitlab+Docker实现SpringBoot项目自动部署">TOC</a></p>
+<h1 id="1-使用Docker搭建Jenkins"><a href="#1-使用Docker搭建Jenkins" class="headerlink" title="1. 使用Docker搭建Jenkins"></a>1. 使用Docker搭建Jenkins</h1><h2 id="1-1-拉取Jenkins镜像"><a href="#1-1-拉取Jenkins镜像" class="headerlink" title="1.1 拉取Jenkins镜像"></a>1.1 拉取Jenkins镜像</h2><p>进入官网：<a href="https://jenkins.io/download/" target="_blank" rel="noopener">https://jenkins.io/download/</a><br>点击<strong>Docker</strong>进入Docker Hub<br><img src="https://img-blog.csdnimg.cn/20190802144218786.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="Jenkins官网"><br>我们这里选择jenkins/jenkins:lts版本的Jenkins，因为Jenkins:latest版本是官方版本，而且是英文的，下载插件什么的因为<strong>墙</strong>的各种原因导致无法下载和下载报错</p>
+<p>复制红框中的命令：docker pull jenkins/jenkins:lts拉取镜像，如果下载镜像比较慢可以考虑给docker设置一个镜像加速【推荐使用aliyun的，不会的可以百度一下】<br><img src="https://img-blog.csdnimg.cn/2019080214463840.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="复制拉取Jenkins镜像的命令"><br>在服务器上输入命令：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull jenkins/jenkins:lts</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20190802145628771.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="拉取Jenkins镜像"><br>注意查看 docker镜像中，Jenkins版本是否是最新版</p>
+<p>命令：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect b137a5753eb1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20190802145803554.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="查看Jenkins是否是最新版"></p>
+<h2 id="1-2-创建目录"><a href="#1-2-创建目录" class="headerlink" title="1.2 创建目录"></a>1.2 创建目录</h2><p>为了方便后期Jenkins中配置文件的修改，同时，防止jenkins中重要文件因为容器损毁或删除导致文件丢失，因此需要将/var/jenkins_home目录对外挂载</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /apps/devops/jenkins</span><br></pre></td></tr></table></figure>
+
+<p>对目录开放docker进程操作的完全读写的权限</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod <span class="number">777</span> /apps/devops/jenkins</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20190802150503285.png" alt="创建挂载目录并授权"></p>
+<h2 id="1-3-启动容器"><a href="#1-3-启动容器" class="headerlink" title="1.3 启动容器"></a>1.3 启动容器</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd -p <span class="number">9003</span>:<span class="number">8080</span> -p <span class="number">9004</span>:<span class="number">50000</span>  --restart always -v /apps/devops/jenkins:<span class="regexp">/var/</span>jenkins_home --name jenkins  jenkins/jenkins:lts</span><br></pre></td></tr></table></figure>
+
+<p>-p 端口映射：Jenkins是Java程序，默认端口是8080<br><img src="https://img-blog.csdnimg.cn/20190802150623757.png" alt="启动Jenkins容器"></p>
+<h2 id="1-4-打开Jenkins管理页面"><a href="#1-4-打开Jenkins管理页面" class="headerlink" title="1.4 打开Jenkins管理页面"></a>1.4 打开Jenkins管理页面</h2><p>访问地址：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//192.168.143.128:9003</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/201908021514289.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="Jenkins初始界面"><br>出现如上页面，代表jenkins启动成功。</p>
+<h2 id="1-5-查看日志获取初始密码"><a href="#1-5-查看日志获取初始密码" class="headerlink" title="1.5 查看日志获取初始密码"></a>1.5 查看日志获取初始密码</h2><p>命令：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs -f jenkins</span><br></pre></td></tr></table></figure>
+
+<p>复制如下图中红框内的初始密码<br>当然，你也可以不通过日志查看，你可以进入黄色框中描述的文件查看初始密码也是一样的，二选一<br><img src="https://img-blog.csdnimg.cn/20190802151206118.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="查看日志并复制初始密码"><br>将密码复制、粘贴到如下框框中，进入jenkins，需要等待数十秒（可能更久）！<br><img src="https://img-blog.csdnimg.cn/20190802151346223.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="粘贴初始密码在这里"><br>如果出现下图情况，等很久，还没有进入<br><img src="https://img-blog.csdnimg.cn/20190802152234419.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="等等很久未进入"><br><strong>解决方案</strong>：<br>① 进入我们前面挂载的Jenkins目录 /apps/devops/jenkins，执行命令：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi hudson.model.UpdateCenter.xml</span><br></pre></td></tr></table></figure>
+
+<p>② 将文件<strong>hudson.model.UpdateCenter.xml</strong>中<strong><a href="https://updates.jenkins.io/update-center.json" target="_blank" rel="noopener">https://updates.jenkins.io/update-center.json</a></strong>改成<strong><a href="http://updates.jenkins.io/update-center.json" target="_blank" rel="noopener">http://updates.jenkins.io/update-center.json</a></strong>（把https改成http）<br><img src="https://img-blog.csdnimg.cn/20190802152532582.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="解决方案"><br>③ 保存，重启Jenkins容器</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost jenkins]# docker restart jenkins</span><br><span class="line">jenkins</span><br><span class="line">[root@localhost jenkins]#</span><br></pre></td></tr></table></figure>
+
+<p>④ 重新进入Jenkins管理页面：<a href="http://192.168.142.128:9003（稍等一会儿，就可以进入**步骤6.安装建议的插件页面**）" target="_blank" rel="noopener">http://192.168.142.128:9003（稍等一会儿，就可以进入**步骤6.安装建议的插件页面**）</a></p>
+<h2 id="1-6-安装推荐的插件"><a href="#1-6-安装推荐的插件" class="headerlink" title="1.6 安装推荐的插件"></a>1.6 安装推荐的插件</h2><p>如下图所示，左侧显示安装推荐的插件，右侧选择自定义安装插件。<br><img src="https://img-blog.csdnimg.cn/20190802153344905.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="安装推荐的插件"><br>我们选择安装推荐的插件，点击左侧的</p>
+<p><img src="https://img-blog.csdnimg.cn/20190802153421810.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="安装推荐的插件中……"><br>如果全部都能正确安装，则会自动进入如下图界面<br><img src="https://img-blog.csdnimg.cn/20190802154005842.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="创建第一个管理员用户"><br>将信息输入对应输入框内，点击<strong>保存并完成</strong>，进入如下图所示<br><img src="https://img-blog.csdnimg.cn/20190802154316872.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="实例配置"></p>
+<h2 id="1-7-成功安装Jenkins"><a href="#1-7-成功安装Jenkins" class="headerlink" title="1.7 成功安装Jenkins"></a>1.7 成功安装Jenkins</h2><p>默认，点击<strong>保存并完成</strong>，OK，这就算搭建成功了（因为我是在VMware CentOS7上使用Docker搭建的Jenkins,GitLab，gitlab又非常耗费资源，所以可能会卡住不动，重启一下Jenkins就可以了），如图<br><img src="https://img-blog.csdnimg.cn/20190802154927484.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="Jenkins管理页面主页"></p>
+<h1 id="2-配置Jenkins"><a href="#2-配置Jenkins" class="headerlink" title="2. 配置Jenkins"></a>2. 配置Jenkins</h1><h2 id="2-1-设置Jenkins时区为北京时间"><a href="#2-1-设置Jenkins时区为北京时间" class="headerlink" title="2.1 设置Jenkins时区为北京时间"></a>2.1 设置Jenkins时区为北京时间</h2><p>点击<strong>系统管理</strong>——<strong>脚本命令行</strong><br><img src="https://img-blog.csdnimg.cn/20190802155614588.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="打开脚本命令行"><br>输入脚本并<strong>运行</strong>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.setProperty(<span class="string">'org.apache.commons.jelly.tags.fmt.timeZone'</span>, <span class="string">'Asia/Shanghai'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如图显示<strong>Result</strong>表示成功<br><img src="https://img-blog.csdnimg.cn/2019080215584431.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="运行脚本命令"></p>
+<h2 id="2-2-安装自动化构建和部署所需的插件"><a href="#2-2-安装自动化构建和部署所需的插件" class="headerlink" title="2.2 安装自动化构建和部署所需的插件"></a>2.2 安装自动化构建和部署所需的插件</h2><p>所需插件：【Maven Integration】、【Pipeline Maven Integration】、【Gitlab】、【Gitlab hook】、【SSH】、【Publish Over SSH】</p>
+<p>进入<strong>系统管理</strong>——<strong>插件管理</strong><br><img src="https://img-blog.csdnimg.cn/20190802160022476.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="进入插件管理"><br>① 安装Maven插件：点击<strong>可选插件</strong>——过滤MavenIntegration插件——勾选Maven Integration和Pipeline Maven Integration——点击<strong>直接安装</strong><br><img src="https://img-blog.csdnimg.cn/20190802160203495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="安装Maven插件"><br>如图，开始安装Maven插件<br><img src="https://img-blog.csdnimg.cn/2019080216032045.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="安装Maven插件"><br>② 安装Gitlab插件：点击<strong>可选插件</strong>——过滤Gitlab插件——勾选Gitlab和Gitlab hook——点击<strong>直接安装</strong><br><img src="https://img-blog.csdnimg.cn/20190802160602917.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="安装gitlab插件"><br>如图，开始安装Gitlab插件<br><img src="https://img-blog.csdnimg.cn/2019080216090179.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="安装Gitlab插件和Gitlab Hook插件中……"><br>③ 安装SSH插件和Publish Over SSH插件：点击<strong>可选插件</strong>——过滤SSH插件——勾选SSH和Publish Over SSH——点击<strong>直接安装</strong></p>
+<p><strong>安装Publish Over SSH插件的原因</strong>：因为本方式是使用docker启动jenkin服务，所以在jenkins后续执行构建任务时候，需要在build成功后，将服务的jar包[以spring boot]服务为例，需要将jar包拷贝到Dockerfile所在服务器的指定目录，进行微服务的启动；所以，此处需要配置SSH服务器的连接，意思就是在jenkins的任务结束后，去执行指定的服务器上的shell命令，做spring boot或cloud服务的镜像的构建，容器的运行，等一系列的事情<br><img src="https://img-blog.csdnimg.cn/20190802161052884.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="安装SSH插件"><br>如图，开始安装SSH插件<br><img src="https://img-blog.csdnimg.cn/20190802161409566.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="安装SSH插件中……"><br>插件全部安装完成后，可以重启一下Jenkins</p>
+<h2 id="2-3-添加凭据"><a href="#2-3-添加凭据" class="headerlink" title="2.3 添加凭据"></a>2.3 添加凭据</h2><p><img src="https://img-blog.csdnimg.cn/20190802161838437.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="进入添加凭据"><br>点击<strong>添加凭据</strong>——输入宿主机服务器的用户名和密码<br><img src="https://img-blog.csdnimg.cn/2019080216251979.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="添加凭据"><br>点击<strong>确定</strong>后<br><img src="https://img-blog.csdnimg.cn/2019080216275264.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="成功添加凭据"></p>
+<h2 id="2-4-配置SSH-remote-hosts"><a href="#2-4-配置SSH-remote-hosts" class="headerlink" title="2.4 配置SSH remote hosts"></a>2.4 配置SSH remote hosts</h2><p>这个配置是干什么的呢？配置SSH连接Dockerfile所在服务器的相关信息，并添加凭证，最后测试连接并保存，以备后面使用！！！</p>
+<p>点击<strong>系统管理</strong>——<strong>系统设置</strong><br><img src="https://img-blog.csdnimg.cn/20190802163015382.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="系统设值"><br>找到<strong>配置</strong>——下拉选择<strong>SSH remote hosts</strong><br><img src="https://img-blog.csdnimg.cn/20190802163138488.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="选择SSH remote hosts"><br>如下图，输入对应的信息，并校验是否连接成功！成功后，点击<strong>应用</strong>——点击<strong>保存</strong><br><img src="https://img-blog.csdnimg.cn/20190802163637799.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="输入SSH信息"></p>
+<h2 id="2-5-全局工具配置"><a href="#2-5-全局工具配置" class="headerlink" title="2.5 全局工具配置"></a>2.5 全局工具配置</h2><p>由于我们要实现的是SpringBoot项目的自动化部署操作，所以需要安装JDK、Git、Maven、Docker<br><img src="https://img-blog.csdnimg.cn/20190802164335958.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="进入全局工具配置"></p>
+<h3 id="2-5-1-安装JDK"><a href="#2-5-1-安装JDK" class="headerlink" title="2.5.1 安装JDK"></a>2.5.1 安装JDK</h3><p>可以安装多个，根据项目JDK版本需求</p>
+<p>输入自定义JDK名称——勾选自动安装——输入Oracle账户、密码——选择JDK版本——勾选同意协议<br><img src="https://img-blog.csdnimg.cn/20190802164948779.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="安装JDK"><br><img src="https://img-blog.csdnimg.cn/20190802165240416.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="输入Oracle账户密码"></p>
+<h3 id="2-5-2-安装Git"><a href="#2-5-2-安装Git" class="headerlink" title="2.5.2 安装Git"></a>2.5.2 安装Git</h3><p>输入自定义Git名称——勾选自动安装<br><img src="https://img-blog.csdnimg.cn/20190802165359421.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="安装Git"></p>
+<h3 id="2-5-3-安装Maven"><a href="#2-5-3-安装Maven" class="headerlink" title="2.5.3 安装Maven"></a>2.5.3 安装Maven</h3><p>输入自定义名称——勾选自动安装——选择版本<br><img src="https://img-blog.csdnimg.cn/20190802165524516.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="安装Maven"></p>
+<h3 id="2-5-4-安装Docker"><a href="#2-5-4-安装Docker" class="headerlink" title="2.5.4 安装Docker"></a>2.5.4 安装Docker</h3><p>输入自定义名称——勾选自动安装<br><img src="https://img-blog.csdnimg.cn/20190802165704291.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="安装Docker"><br>最后，点击<strong>应用</strong>——点击<strong>保存</strong>，OK，完成</p>
+<p>那这些在什么时候才真正的安装了呢？</p>
+<p>是在初次使用到JDK或Maven的时候，才会去自动安装</p>
+<h2 id="2-6-全局安全配置"><a href="#2-6-全局安全配置" class="headerlink" title="2.6 全局安全配置"></a>2.6 全局安全配置</h2><p>点击<strong>系统管理</strong>——<strong>全局安全配置</strong><br><img src="https://img-blog.csdnimg.cn/20190802165844108.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="进入全局安全配置"><br>去掉<strong>防止跨站点请求伪造</strong>前的勾——点击<strong>应用</strong>——<strong>保存</strong><br><img src="https://img-blog.csdnimg.cn/20190802170028267.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="取消勾选防止跨站点请求伪造"><br>这里要说明一下为什么去掉这个勾选：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webhooks与jenkins配合使用时提示：HTTPStatus403-Novalidcrumbwasincludedintherequest,这是因为jenkins在http请求头部中放置了一个名为.crumb的token。在使用了反向代理，并且在jenkins设置中勾选了“防止跨站点请求伪造（Prevent Cross Site Request Forgery exploits）”之后此token会被转发服务器apache/nginx认为是不合法头部而去掉。导致跳转失败。</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-7-关于webhook"><a href="#2-7-关于webhook" class="headerlink" title="2.7 关于webhook"></a>2.7 关于webhook</h2><p>这里需要声明一下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>webhook网络钩子</span><br><span class="line">	可以看成是一个callback  回调方法</span><br><span class="line">	本回调方法核心即包含：</span><br><span class="line">	    触发条件+可供触发的URL+密码(可选) </span><br><span class="line">	    触发条件为:push、merge、PR（即 New  Pull Request）等等git操作，</span><br><span class="line">	    比如你提交一个push操作，就会触发URL请求，会以POST请求去请求这个URL。</span><br><span class="line">		除此以外，你还可以自己指定这个POST请求的数据格式。（<span class="built_in">JSON</span>，x-www-form-urlencoded等）。</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>webhook是gitlab端的</span><br><span class="line">	触发webhook的条件，可以自行配置，都是本地对gitlab的git操作</span><br><span class="line">	触发后去请求的URL地址，是Jenkins提供的。也就是触发后是去请求Jenkins的</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>而实现代码从gitlab到jenkins到自动部署，webhook就是gitlab和jenkins之间的关键点。</span><br><span class="line">	后续会先配置jenkins，以获取到URL和Token,拿着这两个东西去gitlab配置webhook，即可。</span><br><span class="line">	同时，webhook本身还会有很多的触发条件可以勾选。后续步骤可见！</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-新建Jenkins任务"><a href="#3-新建Jenkins任务" class="headerlink" title="3. 新建Jenkins任务"></a>3. 新建Jenkins任务</h1><h2 id="3-1-点击新建任务，输入名称【本处输入名称注意】"><a href="#3-1-点击新建任务，输入名称【本处输入名称注意】" class="headerlink" title="3.1 点击新建任务，输入名称【本处输入名称注意】"></a>3.1 点击新建任务，输入名称【本处输入名称注意】</h2><p>【注意，本名称一般和项目名称一致，因为本名称会在jenkins工作空间下生成目录，类似于IDEA或Ecplise的工作空间的概念】</p>
+<p>【所以，一般情况下，保证本名称=项目名称=docker镜像名称=docker容器名称  这样能尽可能的减轻jenkins配置的shell命令的复杂性！从而形成一定的规范！！】</p>
+<p>选择构建一个Maven项目【因为是springboot的服务】</p>
+<p><img src="https://img-blog.csdnimg.cn/2019080313022519.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="新建任务"></p>
+<h2 id="3-2-源码管理"><a href="#3-2-源码管理" class="headerlink" title="3.2 源码管理"></a>3.2 源码管理</h2><p>输入描述信息，<strong>源码管理</strong>选择Git，从gitlab复制克隆地址粘贴到Repository URL中，没有报错就表示OK的，（注意，这里我是克隆HTTP方式的地址，如果你是克隆SSH方式的地址，你需要添加Creadentials，配置个API Token就可以了）<br><img src="https://img-blog.csdnimg.cn/20190803130525922.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="源码管理"></p>
+<h2 id="3-3-构建触发器"><a href="#3-3-构建触发器" class="headerlink" title="3.3 构建触发器"></a>3.3 构建触发器</h2><p>这里会获取到文章开始提到的URL和Token,这两个东西需要记录下来，供gitlab配置webhook使用<br><img src="https://img-blog.csdnimg.cn/2019080313103583.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="构建触发器-1"><br>点击<strong>高级</strong>，拉下来找到<strong>Generate</strong>并点击，生成一串Secret Token：24d90d26b374ae2df2cda01c17338843（拿小本本记一下这个Token，等下跟上面的URL都会用到的）<br><img src="https://img-blog.csdnimg.cn/20190803131304753.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="高级"></p>
+<h2 id="3-4-添加webhook"><a href="#3-4-添加webhook" class="headerlink" title="3.4 添加webhook"></a>3.4 添加webhook</h2><p>前往gitlab，进入要构建的项目，在<strong>setting</strong>中选择<strong>Integrations</strong>，输入<em>URL<em>和</em>Secret Token</em> 这两在上面图中已经给你标注了，去掉<strong>Enable SSL verification</strong>的勾选</p>
+<p>根据自己的需求，勾选webhook的触发事件都有哪些<br><img src="https://img-blog.csdnimg.cn/20190803163935721.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="添加webhook"><br>点击<strong>Add webhook</strong>，如图表示成功添加了webhook<br><img src="https://img-blog.csdnimg.cn/20190803164014696.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="成功添加webhook"></p>
+<h2 id="3-5-构建环境"><a href="#3-5-构建环境" class="headerlink" title="3.5 构建环境"></a>3.5 构建环境</h2><p>勾选<strong>Add timestamps to the Console Output</strong>，等下可以看到控制台打印的信息，这个根据自己的需求勾选哈<br><img src="https://img-blog.csdnimg.cn/20190803131513510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="构建环境"></p>
+<h2 id="3-6-Pre-Steps-构建之前的步骤"><a href="#3-6-Pre-Steps-构建之前的步骤" class="headerlink" title="3.6 Pre Steps(构建之前的步骤)"></a>3.6 Pre Steps(构建之前的步骤)</h2><p>配置前一步需要做的事情是：清理本项目在jenkins的workspace中的历史文件夹</p>
+<p>你可以不用知道WORKSPACE具体的地址在哪里，因为下方有链接可以查看到当前jenkins中有哪些可用的变量供你使用</p>
+<p>默认WORKSPACE地址：/var/jenkins_home/workspace（如果你jenkins是docker启动的，并且挂载了目录在宿主机，那你在宿主机也是可以看到的，即 /apps/Devops/jenkins/workspace）</p>
+<p>本处选择是是，执行shell，则表示本处配置的shell命令，是默认在jenkins容器中执行的，而不是在宿主机上</p>
+<p>下拉选择<strong>执行 shell</strong><br><img src="https://img-blog.csdnimg.cn/20190803131635108.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="Pre Steps"><br>打开<strong>可用的环境变量列表</strong>看看，WORKSPACE是我们要的<br><img src="https://img-blog.csdnimg.cn/20190803131816460.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="环境变量列表"><br>在执行 shell的命令中输入以下命令，设置全局变量</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SERVER_NAME_1=springboot</span><br><span class="line">echo <span class="string">"=========================&gt;&gt;&gt;&gt;&gt;&gt;&gt;工作空间WORKSPACE的地址：$WORKSPACE "</span></span><br><span class="line">cd $WORKSPACE</span><br><span class="line">echo <span class="string">"=========================&gt;&gt;&gt;&gt;&gt;&gt;&gt;进入工作空间WORKSPACE，清除工作空间中原项目的工作空间$SERVER_NAME_1 "</span></span><br><span class="line">rm -rf $SERVER_NAME_1</span><br><span class="line">echo <span class="string">"=========================&gt;&gt;&gt;&gt;&gt;&gt;&gt;清除工作空间中原项目的工作空间$SERVER_NAME_1 ......成功success"</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：本处的SERVER_NAME_1=springboot 是配置项目的名称</p>
+<h2 id="3-7-Build-构建"><a href="#3-7-Build-构建" class="headerlink" title="3.7 Build(构建)"></a>3.7 Build(构建)</h2><p>我们是springboot项目，所以用到maven，这里设置一下全局操作，clean项目，并打成jar包，所以这里输入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clean package</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20190803132243505.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="Build"></p>
+<h2 id="3-8-Post-Steps-执行任务"><a href="#3-8-Post-Steps-执行任务" class="headerlink" title="3.8 Post Steps(执行任务)"></a>3.8 Post Steps(执行任务)</h2><p>只在jenkins构建成功后，才执行这一步</p>
+<p>因为最后的构建成功的maven项目的jar包是以docker启动服务为目的，所以最后的docker操作，一定是在jenkins容器以外的服务器上运行的，可能是本机宿主机，也可能是远程的服务器，这个根据自己的情况去配置</p>
+<p>本处选择，在远程的SSH执行shell脚本</p>
+<p>选中<strong>只有构建成功才执行这些命令</strong>，然后选择<strong>Execute shell script on remote host using ssh</strong><br><img src="https://img-blog.csdnimg.cn/20190803132400286.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="Post Steps"><br>创建SSH执行命令，命令内容太多了，从创建文件夹和Dockerfile到docker容器运行，有需要的自己去下载，<a href="https://download.csdn.net/download/cjiankai/11467733" target="_blank" rel="noopener">SSH执行命令下载地址</a><br><img src="https://img-blog.csdnimg.cn/201908031601425.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="Execute ssh script on remote host using ssh"><br>OK，到这里基本的任务已经新建成功，至于后续的两个步骤，根据自己的需求自行配置，没有难度的<br><img src="https://img-blog.csdnimg.cn/20190803145036144.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="后续步骤"><br>点击<strong>应用</strong>，<strong>保存</strong></p>
+<h2 id="3-9-测试"><a href="#3-9-测试" class="headerlink" title="3.9 测试"></a>3.9 测试</h2><p>测试push事件触发自动化构建和部署<br><img src="https://img-blog.csdnimg.cn/20190803150016148.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="test push even"><br>前往gitlab,刚我们新增的webhook，点击<strong>test</strong>下拉选择<strong>push events</strong>，出现HTTP 200表示OK了<br><img src="https://img-blog.csdnimg.cn/20190803150242359.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="成功push events"><br>回到Jenkins可以看到任务列表，进入任务列表中的springboot，可以看到构建历史<br><img src="https://img-blog.csdnimg.cn/20190803150659476.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="构建历史"><br>点击构建历史中的其中一个任务，可以看到真正构建中<br><img src="https://img-blog.csdnimg.cn/20190803150942545.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>点击<strong>控制台输出</strong>，可以看到执行的命令都在控制台输出了<br><img src="https://img-blog.csdnimg.cn/20190803151354192.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="控制台输出"><br>看到控制台输出最后显示：<strong>SUCESS</strong> 表示成功了<br><img src="https://img-blog.csdnimg.cn/20190803155125933.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="成功"><br>在服务器上执行命令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p>可以看到我们启动起来的springboot容器<br><img src="https://img-blog.csdnimg.cn/20190803155256715.png" alt="启动起来的容器"><br>在浏览器输入：http://服务器ip:9009/test 即可访问刚自动部署的项目<br><img src="https://img-blog.csdnimg.cn/20190803155448157.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqaWFua2Fp,size_16,color_FFFFFF,t_70" alt="项目预览"><br>至此，我们的自动部署就已经完成，如果大家有哪里不懂的或者我写的不对的，敬请指教！</p>
+<h1 id="4-参考资料"><a href="#4-参考资料" class="headerlink" title="4. 参考资料"></a>4. 参考资料</h1><p>Angel挤一挤   <a href="https://www.cnblogs.com/sxdcgaq8080/p/10489369.html" target="_blank" rel="noopener">《【Devops】【docker】【CI/CD】2.docker启动jenkins环境+安装必要的插件 》</a></p>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《基于Jenkins+Gitlab+Docker实现SpringBoot项目自动部署》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/08/25/基于Jenkins-Gitlab-Docker实现SpringBoot项目自动部署/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Jack Chan
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2019/08/25/基于Jenkins-Gitlab-Docker实现SpringBoot项目自动部署/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="基于Jenkins+Gitlab+Docker实现SpringBoot项目自动部署">
+                        
+                        <span class="card-title">基于Jenkins+Gitlab+Docker实现SpringBoot项目自动部署</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            基于Jenkins+Gitlab+Docker实现SpringBoot项目自动部署,生产中很方便，给测试用也很方便
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-25
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Jenkins/" class="post-category" target="_blank">
+                                    Jenkins
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Jenkins/" target="_blank">
+                        <span class="chip bg-color">Jenkins</span>
+                    </a>
+                    
+                    <a href="/tags/Gitlab/" target="_blank">
+                        <span class="chip bg-color">Gitlab</span>
+                    </a>
+                    
+                    <a href="/tags/Docker/" target="_blank">
+                        <span class="chip bg-color">Docker</span>
+                    </a>
+                    
+                    <a href="/tags/CI-CD/" target="_blank">
+                        <span class="chip bg-color">CI/CD</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/08/25/各种工作流的引擎/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="各种工作流的引擎的比较">
+                        
+                        <span class="card-title">各种工作流的引擎的比较</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            各种工作流的引擎的比较，主要还是针对flwoable、activiti、JBPM、ComFrame
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-25
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/工作流/" class="post-category" target="_blank">
+                                    工作流
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/flowable/" target="_blank">
+                        <span class="chip bg-color">flowable</span>
+                    </a>
+                    
+                    <a href="/tags/工作流/" target="_blank">
+                        <span class="chip bg-color">工作流</span>
+                    </a>
+                    
+                    <a href="/tags/activiti/" target="_blank">
+                        <span class="chip bg-color">activiti</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('50')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 楷の博客<br />'
+            + '作者: Jack Chan<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://jkxl.github.io/" target="_blank">Jack Chan</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a> 的
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>主题搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">9.1k</span>
+            
+
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/jkxl" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:cjiankai@sina.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=755344386" class="tooltipped" data-tooltip="QQ联系我: 755344386" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    <script src="/libs/others/clicklove.js"></script>
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
